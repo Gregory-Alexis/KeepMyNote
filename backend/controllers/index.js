@@ -1,5 +1,5 @@
-const signup = require('../controllers/signup');
-const login = require('../controllers/login');
-const logout = require('../controllers/logout');
+const signup = require('./user/signup');
+const login = require('./user/login');
+const logout = require('./user/logout');
 
 module.exports = { signup, login, logout };
