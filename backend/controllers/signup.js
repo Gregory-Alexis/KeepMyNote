@@ -8,14 +8,12 @@ const signup = async (req, res) => {
 
   try {
     if (!firstName || !lastName || !email || !password) {
-      res.status(400).json({ success: false, message: 'All field are required' });
-      return;
+      return res.status(400).json({ success: false, message: 'All field are required' });
     }
 
     const userAlreadyExist = await User.findOne({ email });
     if (userAlreadyExist) {
-      res.status(400).json({ success: false, message: 'That user already exist' });
-      return;
+      return res.status(400).json({ success: false, message: 'That user already exist' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,7 +35,7 @@ const signup = async (req, res) => {
       message: 'User created successfully',
       user: {
         ...user._doc,
-        password: null,
+        password: undefined,
       },
     });
   } catch (error) {
