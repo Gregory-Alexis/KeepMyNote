@@ -4,10 +4,10 @@ const User = require('../../models/User_model');
 const generateAndSetCookie = require('../../utils/generateAndSetCookie');
 
 const signup = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    if (!firstName || !lastName || !email || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({ success: false, message: 'All field are required' });
     }
 
@@ -17,15 +17,11 @@ const signup = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
     const user = await User.create({
-      firstName,
-      lastName,
+      username,
       email,
       password: hashedPassword,
-      verificationToken,
-      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
     });
 
     generateAndSetCookie(res, user._id);
