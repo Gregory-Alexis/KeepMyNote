@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
-const User = require('../models/User_model');
-const generateAndSetCookie = require('../utils/generateAndSetCookie');
+const User = require('../../models/User_model');
+const generateAndSetCookie = require('../../utils/generateAndSetCookie');
 
 const signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
