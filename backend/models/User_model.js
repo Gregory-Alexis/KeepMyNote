@@ -1,4 +1,6 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const UserSchema = new Schema(
   {
@@ -19,8 +21,6 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    verificationToken: String,
-    verificationTokenExpiresAt: Date,
   },
   { timestamps: true }
 );
