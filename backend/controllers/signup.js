@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const User = require('../models/User_model');
 const generateAndSetCookie = require('../utils/generateAndSetCookie');
 
@@ -7,11 +9,13 @@ const signup = async (req, res) => {
   try {
     if (!firstName || !lastName || !email || !password) {
       res.status(400).json({ success: false, message: 'All field are required' });
+      return;
     }
 
     const userAlreadyExist = await User.findOne({ email });
     if (userAlreadyExist) {
       res.status(400).json({ success: false, message: 'That user already exist' });
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,8 +29,6 @@ const signup = async (req, res) => {
       verificationToken,
       verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
     });
-
-    await user.save();
 
     generateAndSetCookie(res, user._id);
 
