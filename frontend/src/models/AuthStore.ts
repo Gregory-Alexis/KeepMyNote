@@ -6,4 +6,5 @@ export type AuthStore = {
   isLoading: boolean;
   error: string | null;
   isAuthChecked: boolean;
+  signup: (username: string, email: string, password: string) => Promise<void>;
 };
