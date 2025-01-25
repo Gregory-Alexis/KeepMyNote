@@ -1,6 +1,29 @@
-import { Link } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { SignUpModel } from '../models/SignUp';
+import { useAuthStore } from '../store/auth_store';
 
 const SignUpPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<SignUpModel>();
+
+  const navigate = useNavigate();
+  const { signup } = useAuthStore();
+
+  const onSubmit: SubmitHandler<SignUpModel> = async (data) => {
+    try {
+      signup(data.username, data.email, data.password);
+      navigate('/');
+    } catch (error: any) {
+      throw new Error(`Error signing up: ${error.message}`);
+    }
+  };
+
   return (
     <div className='h-screen flex flex-col justify-center items-center'>
       <div className='text-center mb-8'>
@@ -8,17 +31,25 @@ const SignUpPage = () => {
         <p className='text-lg text-gray-700 mt-2'>Join the community</p>
       </div>
 
-      <form className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'
+      >
         <div className='mb-6'>
           <label htmlFor='username' className='block text-gray-700 font-semibold mb-2'>
             Username
           </label>
           <input
             type='text'
-            id='firstname'
+            id='username'
             placeholder='John Doe'
             className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500'
+            {...register('username', {
+              required: 'Username is required',
+              minLength: { value: 3, message: 'username must be at least 3 characters long' },
+            })}
           />
+          {errors.username && <p className='text-red-500'>{errors.username.message}</p>}
         </div>
 
         <div className='mb-6'>
@@ -30,7 +61,15 @@ const SignUpPage = () => {
             id='email'
             placeholder='John_Doe@yourmail.com'
             className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500'
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                message: 'Invalid email address',
+              },
+            })}
           />
+          {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
         </div>
 
         <div className='mb-6'>
@@ -42,7 +81,12 @@ const SignUpPage = () => {
             id='password'
             placeholder='Your password'
             className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500'
+            {...register('password', {
+              required: 'Password is required',
+              minLength: { value: 6, message: 'Password must be at least 6 characters long' },
+            })}
           />
+          {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
         </div>
 
         <div className='mb-6'>
@@ -54,7 +98,14 @@ const SignUpPage = () => {
             id='confirmPassword'
             placeholder='Confirm your password'
             className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500'
+            {...register('confirmPassword', {
+              required: 'Password confirmation is required',
+              validate: (value) => value === watch('password') || 'Passwords do not match',
+            })}
           />
+          {errors.confirmPassword && (
+            <p className='text-red-500'>{errors.confirmPassword.message}</p>
+          )}
         </div>
 
         <button
