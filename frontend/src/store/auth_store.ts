@@ -3,7 +3,7 @@ import axios from 'axios';
 import { create } from 'zustand';
 import { AuthStore } from '../models/AuthStore';
 
-const API_URL = import.meta.env.REACT_APP_API_URL;
+const AUTH_API_URL = 'http://localhost:5000/api/auth';
 
 axios.defaults.withCredentials = true;
 
@@ -12,12 +12,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   isLoading: false,
   error: null,
-  isAuthChecked: true,
+  isAuthChecked: false,
 
   signup: async (username: string, email: string, password: string) => {
     set({ isLoading: true });
     try {
-      const response = await axios.post(`${API_URL}/signup`, {
+      const response = await axios.post(`${AUTH_API_URL}/signup`, {
         username,
         email,
         password,
@@ -32,9 +32,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 
   login: async (email: string, password: string) => {
-    set({ isAuthenticated: false, isLoading: true, error: null, user: null });
+    set({ isLoading: true, error: null, user: null });
     try {
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await axios.post(`${AUTH_API_URL}/login`, {
         email,
         password,
       });
@@ -48,9 +48,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 
   logout: async () => {
-    set({ isAuthenticated: true, isLoading: true, error: null });
+    set({ isAuthenticated: false, isLoading: true, error: null, user: null });
     try {
-      await axios.post(`${API_URL}/logout`);
+      await axios.post(`${AUTH_API_URL}/logout`);
       set({ isAuthenticated: false, user: null, isLoading: false, error: null });
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || 'Error logging out';
@@ -60,10 +60,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 
   checkAuth: async () => {
-    set({ isAuthChecked: true, error: null });
+    set({ isAuthChecked: false, error: null });
     try {
-      const response = await axios.get(`${API_URL}/check-auth`);
-      set({ user: response.data.user, isAuthenticated: true, isAuthChecked: false });
+      const response = await axios.get(`${AUTH_API_URL}/check-auth`);
+      set({ user: response.data.user, isAuthenticated: true, isAuthChecked: true });
     } catch (error: any) {
       set({ error: null, isAuthChecked: false, isAuthenticated: false });
     }
