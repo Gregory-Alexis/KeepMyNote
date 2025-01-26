@@ -3,12 +3,12 @@ import { useMutation, useQueryClient, UseMutationResult } from '@tanstack/react-
 
 import { MutationContext, Note } from '../models/Note';
 
-const API_URL = import.meta.env.REACT_NOTE_API_URL;
+const NOTE_API_URL = 'http://localhost:5000/api/notes';
 
-export const addNote = async (newNote: Note): Promise<Note> => {
-  const response = await axios.post(`${API_URL}/create`, newNote);
+export const addNote = async (newNote: Note): Promise<any> => {
+  const response = await axios.post(`${NOTE_API_URL}/create`, newNote);
 
-  const data = await response.data;
+  const data = response.data;
   return data;
 };
 
