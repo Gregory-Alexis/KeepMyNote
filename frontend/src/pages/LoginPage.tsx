@@ -1,6 +1,29 @@
 import { Link } from 'react-router-dom';
+import { useAuthStore } from '../store/auth_store';
+import { LoginModel } from '../models/Login';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 const LoginPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginModel>();
+
+  const { login } = useAuthStore();
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  const LoginHandler: SubmitHandler<LoginModel> = async (data) => {
+    try {
+      setAuthError(null);
+      await login(data.email, data.password);
+    } catch (error: any) {
+      setAuthError('Invalid email or password');
+      throw new Error(`Error logging in: ${error.message}`);
+    }
+  };
+
   return (
     <div className='min-h-screen flex flex-col justify-center items-center'>
       <div className='text-center mb-8'>
@@ -8,7 +31,10 @@ const LoginPage = () => {
         <p className='text-lg text-gray-800 mt-2'>Connect and share your notes</p>
       </div>
 
-      <form className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'>
+      <form
+        onSubmit={handleSubmit(LoginHandler)}
+        className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'
+      >
         <div className='mb-6'>
           <label htmlFor='email' className='block text-gray-700 font-semibold mb-2'>
             Email
@@ -16,11 +42,18 @@ const LoginPage = () => {
           <input
             type='email'
             id='email'
-            name='email'
             placeholder='Enter your email'
             className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500'
-            value={''}
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                message: 'Invalid email format',
+              },
+            })}
+            required
           />
+          {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
         </div>
 
         <div className='mb-6'>
@@ -30,13 +63,16 @@ const LoginPage = () => {
           <input
             type='password'
             id='password'
-            name='password'
-            placeholder='Entrez your password'
+            placeholder='Enter your password'
             className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500'
-            value={''}
+            {...register('password', {
+              required: 'Password is required',
+            })}
             required
           />
         </div>
+
+        {authError && <p className='text-red-500 mb-4'>{authError}</p>}
 
         <button
           type='submit'
