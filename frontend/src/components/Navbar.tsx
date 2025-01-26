@@ -9,7 +9,7 @@ const Navbar = () => {
   };
   return (
     <nav className='bg-gray-800 text-white flex justify-between items-center p-4'>
-      {isAuthenticated && <span className='text-2xl'>{user?.username}</span>}
+      {isAuthenticated && <span className='text-2xl'>Welcome {user?.username}</span>}
 
       <span className=' text-2xl font-bold'>Keep My Notes</span>
 
