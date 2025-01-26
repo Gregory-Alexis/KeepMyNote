@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { SignUpModel } from '../models/SignUp';
 import { useAuthStore } from '../store/auth_store';
@@ -12,13 +12,11 @@ const SignUpPage = () => {
     watch,
   } = useForm<SignUpModel>();
 
-  const navigate = useNavigate();
   const { signup } = useAuthStore();
 
-  const onSubmit: SubmitHandler<SignUpModel> = async (data) => {
+  const SignUpHandler: SubmitHandler<SignUpModel> = async (data) => {
     try {
-      signup(data.username, data.email, data.password);
-      navigate('/');
+      await signup(data.username, data.email, data.password);
     } catch (error: any) {
       throw new Error(`Error signing up: ${error.message}`);
     }
@@ -32,7 +30,7 @@ const SignUpPage = () => {
       </div>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(SignUpHandler)}
         className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'
       >
         <div className='mb-6'>
