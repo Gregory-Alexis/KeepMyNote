@@ -3,7 +3,7 @@ import axios from 'axios';
 import { create } from 'zustand';
 import { AuthStore } from '../models/AuthStore';
 
-const API_URL = 'http://localhost:5173/api/auth';
+const API_URL = import.meta.env.REACT_APP_API_URL;
 
 axios.defaults.withCredentials = true;
 
@@ -56,6 +56,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
       const errorMessage = error.response?.data?.message || 'Error logging out';
       set({ error: errorMessage, isLoading: false });
       throw error;
+    }
+  },
+
+  checkAuth: async () => {
+    set({ isAuthChecked: true, error: null });
+    try {
+      const response = await axios.get(`${API_URL}/check-auth`);
+      set({ user: response.data.user, isAuthenticated: true, isAuthChecked: false });
+    } catch (error: any) {
+      set({ error: null, isAuthChecked: false, isAuthenticated: false });
     }
   },
 }));
