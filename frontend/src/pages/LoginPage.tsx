@@ -28,7 +28,7 @@ const LoginPage = () => {
     <div className='min-h-screen flex flex-col justify-center items-center'>
       <div className='text-center mb-8'>
         <h1 className='text-3xl font-bold text-gray-600'>Keep My Notes</h1>
-        <p className='text-lg text-gray-800 mt-2'>Connect and share your notes</p>
+        <p className='text-lg text-gray-800 mt-2'>Login and share your notes</p>
       </div>
 
       <form
@@ -82,9 +82,9 @@ const LoginPage = () => {
         </button>
 
         <p className='mt-6 text-center text-gray-700'>
-          Pas encore de compte ?{' '}
+          No account ?{' '}
           <Link to='/signup' className='text-blue-500 hover:underline'>
-            Inscrivez-vous
+            Sign up
           </Link>
         </p>
       </form>
