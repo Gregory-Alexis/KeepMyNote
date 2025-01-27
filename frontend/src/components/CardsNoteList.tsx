@@ -1,14 +1,112 @@
+import { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+import { FormData, Note } from '../models/Note';
+import { useDeleteNote } from '../mutations/deleteNote';
+import { useUpdateNote } from '../mutations/updateNote';
+
 type CardsNoteListProps = {
   title: string;
   content: string;
+  note: Note;
 };
 
-const CardsNoteList = ({ title, content }: CardsNoteListProps) => {
+const CardsNoteList = ({ title, content, note }: CardsNoteListProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const deleteMutation = useDeleteNote();
+  const updateMutation = useUpdateNote();
+
+  const { register, handleSubmit, reset, setValue } = useForm<FormData>({
+    defaultValues: {
+      title: note.title,
+      note: note.content,
+    },
+  });
+
+  const handleDelete = () => {
+    if (confirm('Are you sure you want to delete this note?')) {
+      deleteMutation.mutate(note._id, {
+        onError: () => alert('Failed to delete the note'),
+      });
+    }
+  };
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    updateMutation.mutate(
+      {
+        noteID: note._id,
+        note: { ...note, ...data },
+      },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+        onError: () => {
+          alert('Failed to update the note');
+        },
+      }
+    );
+  };
+
+  const handleEdit = () => {
+    setValue('title', note.title);
+    setValue('note', note.content);
+    setIsEditing(true);
+  };
+
   return (
     <div className='w-lg h-60 m-12 rounded-2xl bg-white shadow-[3px_3px_10px_5px_rgba(31,41,55,0.50)] p-4 overflow-auto break-words'>
-      <h3 className='text-center font-medium border-b-1 pb-2'>{title}</h3>
-      <p className='m-4'>{content}</p>
+      {isEditing ? (
+        <>
+          <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+            <div>
+              <input
+                {...register('title', { required: 'Title is required' })}
+                className='w-full mb-2 p-2 border border-gray-300 rounded-lg'
+                placeholder='Edit Title'
+              />
+            </div>
+            <div>
+              <textarea
+                {...register('note', { required: 'Content is required' })}
+                className='w-full h-24 p-2 border border-gray-300 rounded-lg'
+                placeholder='Edit Content'
+              />
+            </div>
+            <div className='flex space-x-4'>
+              <button type='submit' className='bg-green-500 text-white rounded-lg p-2'>
+                Save
+              </button>
+              <button
+                type='button'
+                onClick={() => {
+                  setIsEditing(false);
+                  reset();
+                }}
+                className='bg-gray-500 text-white rounded-lg p-2'
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </>
+      ) : (
+        <>
+          <h3 className='text-center font-medium border-b-1 pb-2'>{title}</h3>
+          <p className='m-4'>{content}</p>
+          <div className='flex space-x-4'>
+            <button onClick={handleEdit} className='bg-yellow-500 text-white rounded-lg p-2'>
+              Edit
+            </button>
+            <button onClick={handleDelete} className='bg-blue-500 text-white rounded-lg p-2'>
+              Delete
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
+
 export default CardsNoteList;
