@@ -15,7 +15,7 @@ const CardNote = () => {
   return (
     <div className='flex flex-wrap justify-center'>
       {notes?.map((note) => (
-        <CardsNoteList key={note._id} title={note.title} content={note.content} />
+        <CardsNoteList key={note._id} note={note} title={note.title} content={note.content} />
       ))}
     </div>
   );
