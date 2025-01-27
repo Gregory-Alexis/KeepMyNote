@@ -10,7 +10,7 @@ const FormInput = () => {
     reset,
     formState: { errors },
   } = useForm<FormData>();
-  const mutation = useAddNote();
+  const addMutation = useAddNote();
   const { user } = useAuthStore();
 
   const onSubmit = (data: FormData) => {
@@ -21,7 +21,7 @@ const FormInput = () => {
       userID: user?.id,
     };
 
-    mutation.mutate(newNote, {
+    addMutation.mutate(newNote, {
       onSuccess: () => {
         reset(); // Reset the form after successful submission
       },
@@ -44,7 +44,7 @@ const FormInput = () => {
           className='outline-none w-full mb-2 placeholder:text-gray-500 font-semibold border-b-1'
           {...register('title', {
             required: true,
-            maxLength: { value: 50, message: 'The title cannot be longer than 50 characters' },
+            maxLength: { value: 30, message: 'The title cannot be longer than 30 characters' },
           })}
         />
         {errors.title && <p className='text-red-500'>{errors.title.message}</p>}
