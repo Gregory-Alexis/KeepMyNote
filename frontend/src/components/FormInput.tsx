@@ -11,7 +11,7 @@ const FormInput = () => {
     formState: { errors },
   } = useForm<FormData>();
   const addMutation = useAddNote();
-  const { user } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
 
   const onSubmit = (data: FormData) => {
     const newNote: Note = {
@@ -23,12 +23,16 @@ const FormInput = () => {
 
     addMutation.mutate(newNote, {
       onSuccess: () => {
-        reset(); // Reset the form after successful submission
+        reset();
       },
       onError: (error) => {
         console.error('Failed to add note:', error);
       },
     });
+
+    if (!isAuthenticated) {
+      alert('Please log in to add a note');
+    }
   };
 
   return (
