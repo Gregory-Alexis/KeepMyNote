@@ -2,19 +2,17 @@ export type Note = {
   _id: string;
   title: string;
   content: string;
-  userID: string | undefined;
+  user: string | undefined;
 };
 
 export type NewNote = {
   _id: string;
   title: string;
   content: string;
-  userID: string | undefined;
+  user: string | undefined;
 };
 
-// Define a context type to store the previous notes
 export type MutationContext = {
-  // Store the previous notes so we can roll back if there is an error
   previousNotes?: Note[];
 };
 
