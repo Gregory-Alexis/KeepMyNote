@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+
 import { useAddNote } from '../mutations/addNote';
 import { Note, FormData } from '../models/Note';
 import { useAuthStore } from '../store/auth_store';
@@ -18,7 +19,7 @@ const FormInput = () => {
       _id: Date.now().toString(),
       title: data.title,
       content: data.note,
-      userID: user?.id,
+      user: user?._id,
     };
 
     addMutation.mutate(newNote, {
