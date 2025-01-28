@@ -1,6 +1,7 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { Note } from '../models/Note';
 import axios from 'axios';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
+
+import { Note } from '../models/Note';
 
 export const fetchNotes = async (): Promise<Note[]> => {
   const NOTE_API_URL = 'http://localhost:5000/api/notes';
@@ -20,7 +21,7 @@ export const useNotes = (): UseQueryResult<Note[]> => {
 
     // Refetch the data every 10 seconds
     staleTime: 10000,
-    //cacheTime: 60000,
+    // cacheTime: 60000, not working for now
 
     // Refetch the data every time the window regains focus
     refetchOnWindowFocus: true,

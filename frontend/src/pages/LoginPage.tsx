@@ -1,8 +1,9 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+
 import { useAuthStore } from '../store/auth_store';
 import { LoginModel } from '../models/Login';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
 
 const LoginPage = () => {
   const {

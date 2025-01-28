@@ -1,6 +1,6 @@
 import axios from 'axios';
-
 import { create } from 'zustand';
+
 import { AuthStore } from '../models/AuthStore';
 
 const AUTH_API_URL = 'http://localhost:5000/api/auth';
