@@ -14,9 +14,17 @@ const Navbar = () => {
     <nav className='bg-gray-800 text-white flex justify-between items-center p-4'>
       {isAuthenticated && <span className='text-2xl'>Welcome {user?.username}</span>}
 
-      <span className=' text-2xl font-bold'>Keep My Notes</span>
+      <Link to='/' className=' text-2xl font-bold'>
+        Keep My Notes
+      </Link>
 
       <div className='flex justify-end space-x-4 '>
+        <Link
+          to='/'
+          className='bg-gray-700 px-4 py-2 rounded  transform transition duration-300 hover:bg-gray-500'
+        >
+          Home
+        </Link>
         {!isAuthenticated ? (
           <Link
             to='login'
