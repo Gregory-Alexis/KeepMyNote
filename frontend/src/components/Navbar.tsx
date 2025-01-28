@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { useAuthStore } from '../store/auth_store';
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await logout();
+    navigate('/login');
   };
   return (
     <nav className='bg-gray-800 text-white flex justify-between items-center p-4'>
