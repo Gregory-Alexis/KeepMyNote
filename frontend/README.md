@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# **Keep My Notes**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Keep My Notes est une application de gestion de notes où les utilisateurs peuvent créer, lire, mettre à jour et supprimer leurs propres notes.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **Fonctionnalités**
 
-## Expanding the ESLint configuration
+- **Authentification :**
+  - Inscription et connexion sécurisées avec gestion des sessions via JWT.
+  - Déconnexion pour sécuriser les accès.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Gestion des Notes (CRUD) :**
+  - **Créer** : Ajouter une note avec un titre et un contenu.
+  - **Lire** : Visualiser toutes les notes des utilsateurs.
+  - **Mettre à jour** : Modifier une note existante (uniquement pour le propriétaire).
+  - **Supprimer** : Effacer une note (uniquement pour le propriétaire).
 
-- Configure the top-level `parserOptions` property like this:
+- **Interface Moderne et Réactive :**
+  - UI conçue avec TailwindCSS.
+  - Mises à jour en temps réel grâce à TanStack Query.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Sécurité :**
+  - Les utilisateurs ne peuvent gérer que leurs propres notes (contrôlé par le backend).
+  - Validation des formulaires avec React Hook Form.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## **Technologies Utilisées**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### **Frontend**
+- **React** : Framework JavaScript pour créer des interfaces utilisateur.
+- **TypeScript** : Typage statique pour garantir un code robuste.
+- **React Hook Form** : Gestion performante des formulaires avec validation.
+- **TanStack Query** : Gestion avancée des requêtes réseau et du cache.
+- **TailwindCSS** : Framework CSS utilitaire pour un design rapide.
+
+### **Backend**
+- **Node.js** : Runtime JavaScript côté serveur.
+- **Express** : Framework minimaliste pour construire des APIs.
+- **MongoDB** : Base de données NoSQL pour stocker les utilisateurs et les notes.
+- **Mongoose** : ORM pour interagir avec MongoDB.
+
+### **Autres**
+- **JWT (JSON Web Tokens)** : Pour gérer l'authentification des utilisateurs.
+- **Axios** : Client HTTP pour les requêtes.
+- **Zustand** : Store pour la gestion de l'état global.
+
+
