@@ -1,16 +1,10 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { FormData, Note } from '../models/Note';
+import { CardsNoteListProps, FormData } from '../models/Note';
 import { useDeleteNote } from '../mutations/deleteNote';
 import { useUpdateNote } from '../mutations/updateNote';
 import { useAuthStore } from '../store/auth_store';
-
-type CardsNoteListProps = {
-  title: string;
-  content: string;
-  note: Note;
-};
 
 const CardsNoteList = ({ title, content, note }: CardsNoteListProps) => {
   const [isEditing, setIsEditing] = useState(false);
