@@ -1,10 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '../store/auth_store';
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
@@ -19,12 +20,15 @@ const Navbar = () => {
       </Link>
 
       <div className='flex justify-end space-x-4 '>
-        <Link
-          to='/'
-          className='bg-gray-700 px-4 py-2 rounded  transform transition duration-300 hover:bg-gray-500'
-        >
-          Home
-        </Link>
+        {location.pathname !== '/' && (
+          <Link
+            to='/'
+            className='bg-gray-700 px-4 py-2 rounded  transform transition duration-300 hover:bg-gray-500'
+          >
+            Home
+          </Link>
+        )}
+
         {!isAuthenticated ? (
           <Link
             to='login'
