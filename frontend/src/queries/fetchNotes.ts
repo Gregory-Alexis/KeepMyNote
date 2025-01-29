@@ -18,11 +18,8 @@ export const useNotes = (): UseQueryResult<Note[]> => {
     queryKey: ['notes'],
     // The query function is called whenever the data is stale
     queryFn: fetchNotes,
-
     // Refetch the data every 10 seconds
     staleTime: 10000,
-    // cacheTime: 60000, not working for now
-
     // Refetch the data every time the window regains focus
     refetchOnWindowFocus: true,
   });
