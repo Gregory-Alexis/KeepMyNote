@@ -5,6 +5,8 @@ import { CardsNoteListProps, FormData } from '../models/Note';
 import { useDeleteNote } from '../mutations/deleteNote';
 import { useUpdateNote } from '../mutations/updateNote';
 import { useAuthStore } from '../store/auth_store';
+import Edit from '../assets/edit.png';
+import Delete from '../assets/close.png';
 
 const CardsNoteList = ({ title, content, note }: CardsNoteListProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -110,15 +112,15 @@ const CardsNoteList = ({ title, content, note }: CardsNoteListProps) => {
             <div className='flex space-x-4'>
               <button
                 onClick={handleEdit}
-                className='bg-blue-500 text-white rounded-lg p-2 w-20 hover:bg-blue-400 transform duration-150 hover:scale-105'
+                className='w-8 absolute left-0 -top-2 transform duration-150 hover:scale-105'
               >
-                Edit
+                <img src={Edit} alt='edit button' />
               </button>
               <button
                 onClick={handleDelete}
-                className='bg-black text-white rounded-full px-2 absolute right-0 top-0 transform duration-150 hover:scale-120'
+                className='w-8 absolute right-0 -top-2 transform duration-150 hover:scale-105'
               >
-                X
+                <img src={Delete} alt='delete button' />
               </button>
             </div>
           )}
