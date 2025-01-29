@@ -14,7 +14,13 @@ const CardsNoteList = ({ title, content, note }: CardsNoteListProps) => {
 
   const { user } = useAuthStore();
 
-  const { register, handleSubmit, reset, setValue } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       title: note.title,
       note: note.content,
@@ -53,22 +59,31 @@ const CardsNoteList = ({ title, content, note }: CardsNoteListProps) => {
   };
 
   return (
-    <div className='w-lg h-60 m-12 rounded-2xl bg-white shadow-[3px_3px_10px_5px_rgba(31,41,55,0.50)] p-4 overflow-auto break-words'>
+    <div className='w-md h-60 ml-12 mt-12 rounded-2xl bg-white shadow-[3px_3px_10px_5px_rgba(31,41,55,0.50)] p-4 overflow-auto break-words'>
       {isEditing ? (
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <input
-              {...register('title', { required: 'Title is required' })}
-              className='w-full mb-2 p-2 border border-gray-300 rounded-lg'
+              {...register('title', {
+                required: 'Title is required',
+                maxLength: { value: 30, message: 'The title cannot be longer than 30 characters' },
+              })}
+              className='w-full mb-2 p-2 border rounded-lg'
               placeholder='Edit Title'
             />
+            {errors.title && <p className='text-red-500'>{errors.title.message}</p>}
           </div>
           <div>
             <textarea
-              {...register('note', { required: 'Content is required' })}
-              className='w-full h-24 p-2 border border-gray-300 rounded-lg'
+              {...register('note', {
+                required: 'Content is required',
+                maxLength: { value: 200, message: 'The note cannot be longer than 200 characters' },
+              })}
+              className='w-full h-24 p-2 border rounded-lg outline-none cursor-auto font-light'
               placeholder='Edit Content'
+              style={{ resize: 'none' }}
             />
+            {errors.note && <p className='text-red-500'>{errors.note.message}</p>}
           </div>
           <div className='flex space-x-4'>
             <button type='submit' className='bg-green-500 text-white rounded-lg p-2'>
