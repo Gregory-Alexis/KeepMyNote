@@ -20,3 +20,9 @@ export type FormData = {
   title: string;
   note: string;
 };
+
+export type CardsNoteListProps = {
+  title: string;
+  content: string;
+  note: Note;
+};
