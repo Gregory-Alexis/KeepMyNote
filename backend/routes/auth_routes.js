@@ -6,7 +6,7 @@ const authController = require('../controllers/user/index');
 const userRouter = express.Router();
 
 userRouter.get('/check-auth', verifyToken, authController.checkAuth);
-userRouter.delete('/delete-user/:userID', verifyToken, authController.deleteUser);
+userRouter.delete('/delete-account/:userID', verifyToken, authController.deleteUser);
 
 userRouter.post('/signup', authController.signup);
 userRouter.post('/login', authController.login);
