@@ -1,14 +1,18 @@
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '../store/auth_store';
-import ToggleMobileNavbarButton from './ToggleMobileNavbar';
-import React from 'react';
+import { useDeleteUser } from '../mutations/deleteUser';
+
 import { ToggleMobileNavbarButtonProps } from '../models/ToggleButton';
+import ToggleMobileNavbarButton from './ToggleMobileNavbar';
 
 const Navbar: React.FC<ToggleMobileNavbarButtonProps> = ({ width, toggle, handleToggleButton }) => {
   const { isAuthenticated, user, logout, deleteAccount } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const deleteAccountMutation = useDeleteUser();
 
   const handleLogout = async () => {
     await logout();
@@ -17,10 +21,17 @@ const Navbar: React.FC<ToggleMobileNavbarButtonProps> = ({ width, toggle, handle
 
   const handleDeleteAccount = async () => {
     if (confirm('Are you sure you want to delete your account?')) {
-      await deleteAccount(user?._id!);
-      navigate('/');
+      deleteAccountMutation.mutate(user?._id!, {
+        onSuccess: () => {
+          alert('Your account has been deleted');
+          logout();
+          navigate('/signup');
+        },
+        onError: () => alert('Failed to delete your account'),
+      });
     }
   };
+
   return (
     <nav className='bg-gray-800 text-white flex justify-between items-center p-4'>
       {isAuthenticated && <span className='text-2xl'>Welcome {user?.username}</span>}
