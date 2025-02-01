@@ -1,11 +1,11 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '../store/auth_store';
-import ToggleButton from './ToggleMobileNavbar';
+import ToggleMobileNavbarButton from './ToggleMobileNavbar';
 import React from 'react';
-import { ToggleButtonProps } from '../models/ToggleButton';
+import { ToggleMobileNavbarButtonProps } from '../models/ToggleButton';
 
-const Navbar: React.FC<ToggleButtonProps> = ({ width, toggle, handleToggleButton }) => {
+const Navbar: React.FC<ToggleMobileNavbarButtonProps> = ({ width, toggle, handleToggleButton }) => {
   const { isAuthenticated, user, logout } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -59,7 +59,11 @@ const Navbar: React.FC<ToggleButtonProps> = ({ width, toggle, handleToggleButton
           )}
         </div>
       ) : (
-        <ToggleButton width={width} toggle={toggle} handleToggleButton={handleToggleButton} />
+        <ToggleMobileNavbarButton
+          width={width}
+          toggle={toggle}
+          handleToggleButton={handleToggleButton}
+        />
       )}
     </nav>
   );
