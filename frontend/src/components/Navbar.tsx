@@ -6,13 +6,20 @@ import React from 'react';
 import { ToggleMobileNavbarButtonProps } from '../models/ToggleButton';
 
 const Navbar: React.FC<ToggleMobileNavbarButtonProps> = ({ width, toggle, handleToggleButton }) => {
-  const { isAuthenticated, user, logout } = useAuthStore();
+  const { isAuthenticated, user, logout, deleteAccount } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
     navigate('/login');
+  };
+
+  const handleDeleteAccount = async () => {
+    if (confirm('Are you sure you want to delete your account?')) {
+      await deleteAccount(user?._id!);
+      navigate('/');
+    }
   };
   return (
     <nav className='bg-gray-800 text-white flex justify-between items-center p-4'>
@@ -41,12 +48,20 @@ const Navbar: React.FC<ToggleMobileNavbarButtonProps> = ({ width, toggle, handle
               Login
             </Link>
           ) : (
-            <button
-              onClick={handleLogout}
-              className='bg-gray-700 px-4 py-2 rounded  transform transition duration-300 hover:bg-gray-500'
-            >
-              Logout
-            </button>
+            <>
+              <button
+                onClick={handleLogout}
+                className='bg-gray-700 px-4 py-2 rounded  transform transition duration-300 hover:bg-gray-500'
+              >
+                Logout
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                className='bg-gray-700 px-4 py-2 rounded  transform transition duration-300 hover:bg-gray-500'
+              >
+                Delete Account
+              </button>
+            </>
           )}
 
           {!isAuthenticated && (
