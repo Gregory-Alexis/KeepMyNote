@@ -10,4 +10,5 @@ export type AuthStore = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  deleteAccount: (userID: string) => Promise<void>;
 };
