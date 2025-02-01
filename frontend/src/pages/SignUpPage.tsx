@@ -23,7 +23,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className='h-screen flex flex-col justify-center items-center'>
+    <div className='p-6 h-screen flex flex-col justify-center items-center'>
       <div className='text-center mb-8'>
         <h1 className='text-3xl font-bold text-gray-600'>Keep My Notes</h1>
         <p className='text-lg text-gray-700 mt-2'>Join the community</p>

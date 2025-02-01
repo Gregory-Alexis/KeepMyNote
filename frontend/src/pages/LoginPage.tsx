@@ -26,7 +26,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='min-h-screen flex flex-col justify-center items-center'>
+    <div className='p-6 min-h-screen flex flex-col justify-center items-center'>
       <div className='text-center mb-8'>
         <h1 className='text-3xl font-bold text-gray-600'>Keep My Notes</h1>
         <p className='text-lg text-gray-800 mt-2'>Login and share your notes</p>

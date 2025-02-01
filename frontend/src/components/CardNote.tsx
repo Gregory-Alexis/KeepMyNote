@@ -13,7 +13,7 @@ const CardNote = () => {
   }
 
   return (
-    <div className='flex flex-wrap'>
+    <div className='flex flex-wrap md:justify-center lg:justify-start'>
       {notes?.map((note) => (
         <CardsNoteList key={note._id} note={note} title={note.title} content={note.content} />
       ))}

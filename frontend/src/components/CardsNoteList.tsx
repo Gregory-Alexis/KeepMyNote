@@ -61,7 +61,7 @@ const CardsNoteList = ({ title, content, note }: CardsNoteListProps) => {
   };
 
   return (
-    <div className='w-md h-48 m-4 rounded-2xl bg-white shadow-[3px_3px_10px_5px_rgba(31,41,55,0.50)] p-4 overflow-auto break-words  lg:ml-12 lg:h-60 '>
+    <div className='w-md h-48 m-4 rounded-2xl bg-white shadow-[3px_3px_10px_5px_rgba(31,41,55,0.50)] p-4 overflow-auto break-words lg:ml-12 lg:h-60 '>
       {isEditing ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>

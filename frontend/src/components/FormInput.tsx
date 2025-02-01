@@ -39,9 +39,9 @@ const FormInput = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='m-6 w-xs rounded-2xl shadow-[3px_3px_10px_5px_rgba(31,41,55,0.50)]  xl:w-2/8'
+      className='m-6 w-xs rounded-2xl shadow-[3px_3px_10px_5px_rgba(31,41,55,0.50)] md:w-lg '
     >
-      <div className='flex flex-col items-center w-full bg-white p-5 rounded-lg relative'>
+      <div className='flex flex-col items-center w-full bg-white p-5 rounded-lg relative '>
         <input
           placeholder='Title'
           type='text'
