@@ -11,6 +11,9 @@ Keep My Notes est une application de gestion de notes où les utilisateurs peuve
   - Inscription et connexion sécurisées avec gestion des sessions via JWT.
   - Déconnexion pour sécuriser les accès.
 
+- **Gestion des Utilisateurs (CRUD) :**
+  - **Supprimer** : Supprimer son compte utilisateur.
+
 - **Gestion des Notes (CRUD) :**
   - **Créer** : Ajouter une note avec un titre et un contenu.
   - **Lire** : Visualiser toutes les notes des utilsateurs.
